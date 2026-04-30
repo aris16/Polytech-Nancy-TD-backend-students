@@ -35,4 +35,20 @@ public class TaskDao {
     public Optional<Task> findById(int id) {
         return Optional.ofNullable(storage.get(id));
     }
+
+    public Map<Integer, Task> findAll() {
+        return storage;
+    }
+
+    public boolean delete(int id) {
+        return storage.remove(id) != null;
+    }
+
+    public boolean update(int id, Task task) {
+        if (!storage.containsKey(id)) {
+            return false;
+        }
+        storage.put(id, task);
+        return true;
+    }
 }

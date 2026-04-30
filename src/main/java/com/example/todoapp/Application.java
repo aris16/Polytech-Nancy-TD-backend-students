@@ -49,6 +49,24 @@ public class Application {
         }
         //endregion
 
+        //region Manage GET /tasks
+        if ("GET".equals(method) && "/tasks".equals(path)) {
+
+            // récupérer les paramètres (ex: todo-only=true))
+            String query = exchange.getRequestURI().getQuery();
+            boolean todoOnly = query != null && query.contains("todo-only=true");
+            // récupérer toutes les tâches
+            var tasks = dao.findAll().values().stream().filter(task -> !todoOnly || !task.done()).toList();
+
+            if (tasks.isEmpty()) {
+                sendResponse(exchange, 204, null);
+            } else {
+                sendResponse(exchange, 200, JsonUtils.serialize(tasks));
+            }
+            return;
+        }
+        //endregion
+
         //region Manage GET /tasks/{id}
         Matcher m = ID_PATH.matcher(path);
         if ("GET".equals(method) && m.matches()) {
@@ -57,6 +75,37 @@ public class Application {
 
             if (task.isPresent()) {
                 sendResponse(exchange, 200, JsonUtils.serialize(task.get()));
+            } else {
+                sendResponse(exchange, 404, null);
+            }
+            return;
+        }
+        //endregion
+
+        //region Manage DELETE /tasks
+        if ("DELETE".equals(method) && m.matches()) {
+            int id = Integer.parseInt(m.group(1));
+            boolean deleted = dao.delete(id);
+
+            if (deleted) {
+                sendResponse(exchange, 204, null);
+            } else {
+                sendResponse(exchange, 404, null);
+            }
+            return;
+        }
+        //endregion
+
+        //region Manage PUT /tasks
+        if ("PUT".equals(method) && m.matches()) {
+            int id = Integer.parseInt(m.group(1));
+            // lire le JSON envoyé par le client
+            Task input = JsonUtils.deserialize(new String(exchange.getRequestBody().readAllBytes(), UTF_8), Task.class);
+
+            boolean updated = dao.update(id, input);
+
+            if (updated) {
+                sendResponse(exchange, 204, null);
             } else {
                 sendResponse(exchange, 404, null);
             }

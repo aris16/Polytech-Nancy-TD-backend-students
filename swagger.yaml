@@ -61,6 +61,57 @@ paths:
                                 $ref: '#/components/schemas/Task'
                 '404':
                     description: Tâche non trouvée
+        delete:
+            tags: [ tasks ]
+            summary: Supprimer une tâche
+            description: Supprime une tâche à partir de son identifiant
+            operationId: deleteTask
+            responses:
+                '204':
+                    description: Tâche supprimée avec succès (No Content)
+                '404':
+                    description: Tâche non trouvée
+        put:
+            tags: [ tasks ]
+            summary: Modifier une tâche
+            operationId: updateTask
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Task'
+            responses:
+                '204':
+                    description: Mise à jour réussie
+                '404':
+                    description: Tâche non trouvée
+
+    /TODO:
+        parameters:
+            -   in: query
+                name: todo-only
+                description: Faut-il récupérer seulement les tâches à réaliser ?
+                required: true
+                schema:
+                    type: boolean
+        get:
+            tags: [ tasks ]
+            summary: Récupérer toutes les tâches
+            description: Récupérer toutes les tâches à réaliser par leur identifiant
+            operationId: getAllTasksById
+            responses:
+                '200':
+                    description: Tâches récupérées
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Task'
+                '204':
+                    description: Pas de contenu
+
 components:
     schemas:
         Task:

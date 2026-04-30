@@ -1,0 +1,51 @@
+{
+  "info": {
+    "_postman_id": "232d4761-b435-4c6e-8a4b-5c17d4fe1f49",
+    "name": "Cours initiation dev WEB",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19610420",
+    "_collection_link": "https://go.postman.co/collection/19610420-232d4761-b435-4c6e-8a4b-5c17d4fe1f49?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET /tasks/1",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "GET /tasks/2",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "GET /tasks/3",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "GET /tasks/4",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "GET /tasks",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}
