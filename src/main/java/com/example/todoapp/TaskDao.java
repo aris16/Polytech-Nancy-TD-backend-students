@@ -48,7 +48,7 @@ public class TaskDao {
         if (!storage.containsKey(id)) {
             return false;
         }
-        storage.put(id, task);
+        storage.put(id, task); // remplacer les données pour un task dont on donne l'id
         return true;
     }
 }
