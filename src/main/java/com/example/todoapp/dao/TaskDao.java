@@ -1,7 +1,6 @@
-package com.example.todoapp;
+package com.example.todoapp.dao;
 
 import com.example.todoapp.business.model.Task;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -10,13 +9,12 @@ import java.util.Optional;
  * Data Access Object for {@link Task} model.
  */
 public class TaskDao {
+    private final Map<Integer, Task> storage = new HashMap();
 
-    private final Map<Integer, Task> storage = new HashMap<>();
-
-    {
-        save(new Task(1, "Réviser DS de maths", "Séries numériques et probabilités.", false));
-        save(new Task(2, "Valider mon PIVE", "PIVE Club Poker.", true));
-        save(new Task(3, "Choisir mon parcours de 4A", "SIR ou SIA ?", false));
+    public TaskDao() {
+        this.save(new Task(1, "Réviser DS de maths", "Séries numériques et probabilités.", false));
+        this.save(new Task(2, "Valider mon PIVE", "PIVE Club Poker.", true));
+        this.save(new Task(3, "Choisir mon parcours de 4A", "SIR ou SIA ?", false));
     }
 
     /**
@@ -25,7 +23,7 @@ public class TaskDao {
      * @return task model.
      */
     public Task save(Task task) {
-        storage.put(task.id(), task);
+        this.storage.put(task.id(), task);
         return task;
     }
 
@@ -35,22 +33,23 @@ public class TaskDao {
      * @return {@link Task} model wrapped by Optional.
      */
     public Optional<Task> findById(int id) {
-        return Optional.ofNullable(storage.get(id));
+        return Optional.ofNullable((Task)this.storage.get(id));
     }
 
     public Map<Integer, Task> findAll() {
-        return storage;
+        return this.storage;
     }
 
     public boolean delete(int id) {
-        return storage.remove(id) != null;
+        return this.storage.remove(id) != null;
     }
 
     public boolean update(int id, Task task) {
-        if (!storage.containsKey(id)) {
+        if (!this.storage.containsKey(id)) {
             return false;
+        } else {
+            this.storage.put(id, task);
+            return true;
         }
-        storage.put(id, task); // remplacer les données pour un task dont on donne l'id
-        return true;
     }
 }
