@@ -36,18 +36,36 @@ public class TaskDao {
         return Optional.ofNullable((Task)this.storage.get(id));
     }
 
+    /**
+     * Récupère toutes les tâches stockées.
+     * @return Une Map contenant toutes les tâches avec leurs informations.
+     */
     public Map<Integer, Task> findAll() {
         return this.storage;
     }
 
+    /**
+     * Supprime une tâche à partir de son identifiant.
+     * @param id L'identifiant de la tâche qu'on veut supprimer.
+     * @return true si la tâche existait et a bien été supprimée,
+     * false si aucun élément ne correspondait à cet id.
+     */
     public boolean delete(int id) {
         return this.storage.remove(id) != null;
     }
 
+    /**
+     * Met à jour les informations d'une tâche.
+     * @param id L'identifiant de la tâche qu'on veut modifier.
+     * @param task Le nouveau Task contenant les données.
+     * @return true si la mise à jour a été effectuée,
+     * false si la tâche n'existe pas.
+     */
     public boolean update(int id, Task task) {
         if (!this.storage.containsKey(id)) {
             return false;
-        } else {
+        }
+        else {
             this.storage.put(id, task);
             return true;
         }
